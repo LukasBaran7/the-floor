@@ -17,11 +17,11 @@ Webowa apka do treningu rozpoznawania kategorii przed udziałem w teleturnieju "
 ## Zakres MVP
 
 - **1 tryb**: trening kategorii
-- **1 kategoria**: flagi państw Europy (20 sztuk)
-- **3 ekrany**: Start → Gra → Wynik
-- **Mechanika**: pokaż flagę → tap ✅/❌ → reveal odpowiedzi (1.5s) + dźwięk → następna → po 20: wynik
+- **Kategorie**: rejestr w `src/data/categories.ts` — start MVP z 1 kategorią (flagi Europy, 20 sztuk), UI wyboru gotowe pod dokładanie kolejnych
+- **4 ekrany**: Start → Categories → Gra → Wynik *(Categories wciągnięty z roadmapy #8 do MVP — patrz Etap 5)*
+- **Mechanika**: pokaż flagę → tap ✅/❌ → reveal odpowiedzi inline pod flagą (1.5s, kolorowy panel zamiast przycisków) + dźwięk → następna → po wszystkich: wynik
 - **Dźwięki**: correct ding przy ✅, incorrect buzz przy ❌
-- **Brak**: timera, statystyk, multi-kategorii, pojedynku, voice, localStorage
+- **Brak**: timera, statystyk, pojedynku, voice, localStorage
 
 ## Struktura plików (docelowa po MVP)
 
@@ -30,12 +30,14 @@ the-floor/
 ├── src/
 │   ├── App.tsx                    # routing między ekranami + stan gry
 │   ├── main.tsx                   # entry (auto z Vite)
-│   ├── types.ts                   # Flag, Screen
+│   ├── types.ts                   # Flag, Category, Screen
 │   ├── index.css                  # tailwind import
 │   ├── data/
-│   │   └── flagi.ts               # 20 flag europy
+│   │   ├── flagi.ts               # 20 flag europy
+│   │   └── categories.ts          # rejestr kategorii (na razie 1)
 │   └── screens/
 │       ├── StartScreen.tsx
+│       ├── CategoriesScreen.tsx   # wybór kategorii
 │       ├── GameScreen.tsx
 │       └── ResultScreen.tsx
 ├── public/
@@ -56,7 +58,13 @@ export type Flag = {
   answer: string;   // np. "Polska"
 };
 
-export type Screen = 'start' | 'game' | 'result';
+export type Category = {
+  id: string;       // np. "flagi-europy"
+  name: string;     // wyświetlane na liście, np. "Flagi Europy"
+  items: Flag[];    // generycznie — w przyszłości może być Marka[] itd.
+};
+
+export type Screen = 'start' | 'categories' | 'game' | 'result';
 ```
 
 ## Dane flag (`src/data/flagi.ts`) — gotowe do wklejenia
@@ -281,12 +289,19 @@ Każdy = jeden wieczór, w kolejności priorytetu:
 | # | Feature | Notatka |
 |---|---------|---------|
 | 7 | localStorage — zapis najlepszego wyniku | `useEffect` + `localStorage.getItem/setItem` |
-| 8 | Druga kategoria + ekran wyboru | Z CSV w `campavao/the-floor` można wziąć inspirację |
+| ~~8~~ | ~~Druga kategoria + ekran wyboru~~ ✅ **DONE w Etapie 5** | Ekran `CategoriesScreen.tsx` + rejestr `categories.ts` już są. Druga kategoria = jeden wpis w `categories.ts`. |
 | 9 | Timer per pytanie (5s, auto-fail) | `setTimeout` + progress bar, dorzuć `Countdown.m4a` |
 | 10 | Tryb pojedynku (45s, 2 graczy) | Nowy ekran, inna logika scoringu |
 | 11 | Powtarzanie błędów (spaced repetition) | localStorage zapamiętuje słabe punkty |
 | 12 | PWA (instalowalna apka) | `vite-plugin-pwa`, manifest, ikona |
-| 13 | Więcej kategorii (10+) | Praca z danymi |
+| 13 | Więcej kategorii (10+) | Praca z danymi — UI gotowe, dosypujesz wpisy do `categories.ts` |
+
+## Zmiany zakresu w trakcie implementacji
+
+| Etap | Co weszło ponad pierwotny plan |
+|------|--------------------------------|
+| 5 | **Ekran wyboru kategorii** (`CategoriesScreen.tsx` + `data/categories.ts` + typ `Category`) — wciągnięte z roadmapy #8 do MVP. Flow zmienił się z 3 ekranów (Start → Game → Result) na 4 (Start → Categories → Game → Result). ResultScreen dostał drugi przycisk "Inne kategorie" (powrót do listy). |
+| 5 | **Reveal odpowiedzi inline pod flagą** zamiast fullscreen — user explicitly chciał widzieć flagę razem z odpowiedzią. Kolorowy panel `bg-green-500`/`bg-red-500` (`h-24 rounded-2xl`) pojawia się w miejscu przycisków ✅/❌; reszta layoutu się nie rusza. |
 
 ---
 
