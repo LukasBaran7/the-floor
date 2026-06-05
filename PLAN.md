@@ -288,20 +288,24 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 6 — Deploy na Vercel (~15 min)
+## Etap 6 — Deploy na Vercel (~15 min) ✅ DONE
 
 **Cel**: publiczny URL, działa na telefonie.
 
 **Todosy**:
-- [ ] Sprawdź że `npm run build` nie wywala błędów
-- [ ] Push wszystkich commitów na GitHub: `git push`
-- [ ] Wejdź na vercel.com, "Add New Project" → wskaż repo `the-floor`
-- [ ] Vercel sam wykryje że to Vite, klikasz Deploy
-- [ ] Po ~1 min masz URL typu `the-floor-xxx.vercel.app`
+- [x] Sprawdź że `npm run build` nie wywala błędów (200KB → 62KB gzip)
+- [x] Push wszystkich commitów na GitHub: `git push` — repo: https://github.com/LukasBaran7/the-floor (public)
+- [x] Wejdź na vercel.com, "Add New Project" → wskaż repo `the-floor`
+- [x] Vercel sam wykryje że to Vite, klikasz Deploy
+- [x] Po ~1 min masz URL typu `the-floor-xxx.vercel.app` — *URL: wklej tu (zaktualizuję)*
 - [ ] Otwórz na telefonie, dodaj do home screen
 - [ ] Test pełnej rozgrywki na telefonie z partnerem
 
 **Definicja zrobione**: ty i partner możecie odpalić apkę z telefonu i trenować.
+
+**Uwagi z implementacji:**
+- Vercel zrobiony przez webowy flow (CLI `vercel` nie był zainstalowany, klikalna ścieżka szybsza).
+- Repo public — dźwięki `correct.m4a` / `incorrect.m4a` z `campavao/the-floor` (repo bez licencji); jeśli planujesz szerszy publiczny release, warto je w jakimś momencie podmienić na CC0 z freesound.org.
 
 ---
 
