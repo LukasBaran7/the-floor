@@ -9,4 +9,4 @@ export type Category = {
   items: Flag[];
 };
 
-export type Screen = 'start' | 'categories' | 'game' | 'result';
+export type Screen = 'start' | 'categories' | 'session-setup' | 'game' | 'result';

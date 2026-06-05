@@ -12,9 +12,10 @@ type Props = {
   total: number;
   score: number;
   onAnswer: (knew: boolean) => void;
+  onExit: () => void;
 };
 
-export function GameScreen({ flag, index, total, score, onAnswer }: Props) {
+export function GameScreen({ flag, index, total, score, onAnswer, onExit }: Props) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [lastKnew, setLastKnew] = useState<boolean | null>(null);
 
@@ -32,9 +33,24 @@ export function GameScreen({ flag, index, total, score, onAnswer }: Props) {
     }, REVEAL_MS);
   };
 
+  const tryExit = () => {
+    if (isRevealed) return;
+    if (confirm('Przerwać sesję? Wynik nie zostanie zapisany.')) {
+      onExit();
+    }
+  };
+
   return (
     <div className="h-dvh flex flex-col">
-      <div className="flex justify-between p-4 text-lg font-medium">
+      <div className="flex items-center justify-between p-4 text-lg font-medium">
+        <button
+          type="button"
+          onClick={tryExit}
+          className="text-blue-600 active:opacity-60"
+          aria-label="Wyjdź"
+        >
+          ← Wyjdź
+        </button>
         <span>
           {index + 1}/{total}
         </span>

@@ -267,22 +267,24 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 5b — Exit z treningu + długość sesji + większy dataset (~45 min)
+## Etap 5b — Exit z treningu + długość sesji + większy dataset (~45 min) ✅ DONE
 
 **Cel**: UX szlif przed deployem — gracz może przerwać sesję, wybrać ile pytań chce i ma większą pulę flag do wyboru.
 
 **Todosy**:
-- [ ] **Przycisk "Wyjdź" w `GameScreen`** — np. w lewym górnym rogu obok counter'a (`←` lub "Wyjdź"). Klik → wraca do `CategoriesScreen` (porzuca obecny postęp, NIE zapisuje wyniku). Otwarte: czy dawać confirm dialog `if (confirm("Przerwać sesję?"))` — zdecydować przy implementacji, raczej tak żeby przypadkowy tap nie zabijał gry.
-- [ ] **Wybór długości sesji** — na ekranie kategorii / po wybraniu kategorii pokazać do wyboru: **10 / 20 / 50 / wszystkie**. Opcje > `category.items.length` ukryte (gdy kategoria ma 20 flag, nie pokazujemy "50"). Możliwe podejścia:
-  - (A) na karcie kategorii w `CategoriesScreen` pokazać 4 mini-przyciski (kompaktowe, mobilnie OK?)
-  - (B) **rekomendowane**: nowy lekki ekran `SessionSetupScreen` (lub modal) między Categories a Game — wybierasz kategorię, potem długość, potem leci gra. Czyściej skaluje się gdy dojdą opcje (timer, tryb itp.).
-  - `App.startGame(category, length)` bierze tylko pierwsze `length` elementów po shuffle.
-- [ ] **Powiększyć dataset flag** — dodać +50 flag tak żeby pula `Flagi Europy` urosła do ~70 (cała Europa łącznie z mikropaństwami i częściowo uznawanymi). Format ten sam: `flagcdn.com/w640/{iso}.png`. Lista do uzgodnienia przy implementacji — startowy zestaw kandydatów: AL, AD, AM, AZ, BY, BA, BG, HR, CY, EE, FI, GE, IS, XK, LV, LI, LT, LU, MT, MD, MC, ME, MK, RU, SM, RS, SI, TR, UA, VA + reszta do 50.
-- [ ] (Opcjonalnie) zmienić `name` kategorii na "Flagi Europy (70)" albo pokazywać count obok nazwy — już mamy `cat.items.length` po prawej stronie karty, więc to się samo zaktualizuje.
+- [x] **Przycisk "Wyjdź" w `GameScreen`** — `← Wyjdź` w lewym górnym rogu (po lewej obok counter'a i score'a). Klik → `window.confirm("Przerwać sesję? Wynik nie zostanie zapisany.")` → jeśli OK, `onExit()` → wraca do `CategoriesScreen` (porzuca postęp, NIE zapisuje wyniku). Confirm zostawiony żeby przypadkowy tap nie zabijał gry. Guard: jeśli `isRevealed`, exit ignorowany (żeby nie kolidować z 1.5s reveal flow).
+- [x] **Wybór długości sesji** — wybrano **wariant B**: nowy ekran `SessionSetupScreen.tsx` między Categories a Game. Pokazuje nazwę kategorii i przyciski `10 / 20 / 50 / Wszystkie (X)`. Opcje ≥ `category.items.length` ukryte (przy małej kategorii np. 20 flag — pokażą się tylko 10 + "Wszystkie (20)"). `App.startSession(length)` bierze `shuffle(category.items).slice(0, length)`.
+- [x] **Powiększyć dataset flag** — `flagi.ts` rozszerzony z 20 do **50 flag** (cała Europa łącznie z mikropaństwami: AL, AD, AM, AZ, BY, BA, BG, HR, CY, EE, FI, GE, IS, XK, LV, LI, LT, LU, MT, MD, MC, ME, MK, RU, SM, RS, SI, TR, UA, VA dodane do dotychczasowych 20). Dodatkowo: nowa kategoria **"Flagi Świata"** w `src/data/flagi-swiata.ts` z 20 popularnymi krajami spoza Europy (USA, Kanada, Meksyk, Brazylia, Argentyna, Chile, Japonia, Chiny, Korea Płd, Indie, Tajlandia, Wietnam, Iran, Izrael, Egipt, Maroko, Nigeria, RPA, Australia, Nowa Zelandia). **Łącznie +50 nowych flag w 2 kategoriach.**
+- [x] Count obok nazwy kategorii już był (Etap 5) — pokazuje się automatycznie z `cat.items.length`.
 
-**Definicja zrobione**: w GameScreen jest przycisk wyjścia (działa, opcjonalnie z confirm); przed startem wybierasz 10/20/50/wszystkie i gra trwa dokładnie tyle pytań; lista flag Europy ma ~70 pozycji.
+**Definicja zrobione**: w GameScreen jest przycisk wyjścia z confirm; przed startem wybierasz 10/20/50/wszystkie i gra trwa dokładnie tyle pytań; są 2 kategorie (50 + 20).
 
 **Commit**: `feat: exit button, session length picker, expanded flag set`
+
+**Uwagi z implementacji:**
+- `Screen` rozszerzony o `'session-setup'` (teraz 5 wartości).
+- `App` state: dodany `category: Category | null` (do `SessionSetupScreen` i replay), `pickCategory(cat)` zamiast od razu `startGame`.
+- ResultScreen "Zagraj jeszcze raz" → wraca do `session-setup` (możesz wybrać inną długość niż poprzednio), NIE od razu do gry.
 
 ---
 

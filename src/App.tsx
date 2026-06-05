@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Category, Flag, Screen } from './types';
 import { StartScreen } from './screens/StartScreen';
 import { CategoriesScreen } from './screens/CategoriesScreen';
+import { SessionSetupScreen } from './screens/SessionSetupScreen';
 import { GameScreen } from './screens/GameScreen';
 import { ResultScreen } from './screens/ResultScreen';
 
@@ -16,9 +17,14 @@ function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
 
-  const startGame = (cat: Category) => {
+  const pickCategory = (cat: Category) => {
     setCategory(cat);
-    setShuffled(shuffle(cat.items));
+    setScreen('session-setup');
+  };
+
+  const startSession = (length: number) => {
+    if (!category) return;
+    setShuffled(shuffle(category.items).slice(0, length));
     setCurrentIndex(0);
     setScore(0);
     setScreen('game');
@@ -35,7 +41,15 @@ function App() {
   };
 
   if (screen === 'start') return <StartScreen onStart={() => setScreen('categories')} />;
-  if (screen === 'categories') return <CategoriesScreen onSelect={startGame} />;
+  if (screen === 'categories') return <CategoriesScreen onSelect={pickCategory} />;
+  if (screen === 'session-setup' && category)
+    return (
+      <SessionSetupScreen
+        category={category}
+        onStart={startSession}
+        onBack={() => setScreen('categories')}
+      />
+    );
   if (screen === 'game')
     return (
       <GameScreen
@@ -44,13 +58,14 @@ function App() {
         total={shuffled.length}
         score={score}
         onAnswer={handleAnswer}
+        onExit={() => setScreen('categories')}
       />
     );
   return (
     <ResultScreen
       score={score}
       total={shuffled.length}
-      onReplay={() => category && startGame(category)}
+      onReplay={() => category && setScreen('session-setup')}
       onBackToCategories={() => setScreen('categories')}
     />
   );
