@@ -1,41 +1,26 @@
 import { useState } from 'react';
 import type { Item } from '../types';
 
-const correctSound = new Audio('/sounds/correct.m4a');
-const incorrectSound = new Audio('/sounds/incorrect.m4a');
-
-const REVEAL_MS = 1500;
-
 type Props = {
   item: Item;
   index: number;
   total: number;
-  score: number;
-  onAnswer: (knew: boolean) => void;
+  onNext: () => void;
   onExit: () => void;
 };
 
-export function GameScreen({ item, index, total, score, onAnswer, onExit }: Props) {
+export function GameScreen({ item, index, total, onNext, onExit }: Props) {
   const [isRevealed, setIsRevealed] = useState(false);
-  const [lastKnew, setLastKnew] = useState<boolean | null>(null);
 
-  const answer = (knew: boolean) => {
-    if (isRevealed) return;
-    const sound = knew ? correctSound : incorrectSound;
-    sound.currentTime = 0;
-    sound.play().catch(() => {});
-    setLastKnew(knew);
-    setIsRevealed(true);
-    setTimeout(() => {
-      setIsRevealed(false);
-      setLastKnew(null);
-      onAnswer(knew);
-    }, REVEAL_MS);
+  const reveal = () => setIsRevealed(true);
+
+  const goNext = () => {
+    setIsRevealed(false);
+    onNext();
   };
 
   const tryExit = () => {
-    if (isRevealed) return;
-    if (confirm('Przerwać sesję? Wynik nie zostanie zapisany.')) {
+    if (confirm('Przerwać sesję?')) {
       onExit();
     }
   };
@@ -54,7 +39,7 @@ export function GameScreen({ item, index, total, score, onAnswer, onExit }: Prop
         <span className="text-white/80">
           {index + 1}/{total}
         </span>
-        <span className="text-floor-orange">✓ {score}</span>
+        <span className="w-12" />
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 min-h-0">
@@ -75,33 +60,19 @@ export function GameScreen({ item, index, total, score, onAnswer, onExit }: Prop
         )}
       </div>
 
-      <div className="p-2">
-        {isRevealed ? (
-          <div
-            className={`h-24 flex items-center justify-center border-2 border-white text-white text-3xl font-bold uppercase tracking-wider ${
-              lastKnew ? 'bg-green-600' : 'bg-red-600'
-            }`}
-          >
+      <div className="p-2 flex flex-col gap-2">
+        {isRevealed && (
+          <div className="h-24 flex items-center justify-center bg-floor-tile border-2 border-white text-white text-3xl font-bold uppercase tracking-wider px-4 text-center">
             {item.answer}
           </div>
-        ) : (
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => answer(false)}
-              className="flex-1 h-24 bg-red-600 border-2 border-white text-white text-3xl font-bold active:bg-red-700"
-            >
-              ❌
-            </button>
-            <button
-              type="button"
-              onClick={() => answer(true)}
-              className="flex-1 h-24 bg-green-600 border-2 border-white text-white text-3xl font-bold active:bg-green-700"
-            >
-              ✅
-            </button>
-          </div>
         )}
+        <button
+          type="button"
+          onClick={isRevealed ? goNext : reveal}
+          className="h-24 bg-floor-blue border-2 border-white text-white text-2xl font-bold uppercase tracking-wider active:opacity-80"
+        >
+          {isRevealed ? 'Dalej →' : 'Pokaż odpowiedź'}
+        </button>
       </div>
     </div>
   );

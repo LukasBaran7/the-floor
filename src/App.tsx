@@ -15,7 +15,6 @@ function App() {
   const [category, setCategory] = useState<Category | null>(null);
   const [shuffled, setShuffled] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [score, setScore] = useState(0);
 
   const pickCategory = (cat: Category) => {
     setCategory(cat);
@@ -33,13 +32,10 @@ function App() {
     });
     setShuffled(items);
     setCurrentIndex(0);
-    setScore(0);
     setScreen('game');
   };
 
-  const handleAnswer = (knew: boolean) => {
-    if (knew) setScore(score + 1);
-
+  const handleNext = () => {
     if (currentIndex + 1 >= shuffled.length) {
       setScreen('result');
     } else {
@@ -63,14 +59,12 @@ function App() {
         item={shuffled[currentIndex]}
         index={currentIndex}
         total={shuffled.length}
-        score={score}
-        onAnswer={handleAnswer}
+        onNext={handleNext}
         onExit={() => setScreen('categories')}
       />
     );
   return (
     <ResultScreen
-      score={score}
       total={shuffled.length}
       onReplay={() => category && setScreen('session-setup')}
       onBackToCategories={() => setScreen('categories')}
