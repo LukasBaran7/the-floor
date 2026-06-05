@@ -297,7 +297,7 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 - [x] Push wszystkich commitów na GitHub: `git push` — repo: https://github.com/LukasBaran7/the-floor (public)
 - [x] Wejdź na vercel.com, "Add New Project" → wskaż repo `the-floor`
 - [x] Vercel sam wykryje że to Vite, klikasz Deploy
-- [x] Po ~1 min masz URL typu `the-floor-xxx.vercel.app` — *URL: wklej tu (zaktualizuję)*
+- [x] Po ~1 min masz URL typu `the-floor-xxx.vercel.app` — **URL: https://the-floor-kohl.vercel.app**
 - [ ] Otwórz na telefonie, dodaj do home screen
 - [ ] Test pełnej rozgrywki na telefonie z partnerem
 
