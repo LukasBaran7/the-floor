@@ -24,7 +24,14 @@ function App() {
 
   const startSession = (length: number) => {
     if (!category) return;
-    setShuffled(shuffle(category.items).slice(0, length));
+    const items = shuffle(category.items).slice(0, length);
+    items.forEach((it) => {
+      if (it.img) {
+        const img = new Image();
+        img.src = it.img;
+      }
+    });
+    setShuffled(items);
     setCurrentIndex(0);
     setScore(0);
     setScreen('game');
