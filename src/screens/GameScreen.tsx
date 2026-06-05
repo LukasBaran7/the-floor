@@ -10,10 +10,11 @@ type Props = {
   flag: Flag;
   index: number;
   total: number;
+  score: number;
   onAnswer: (knew: boolean) => void;
 };
 
-export function GameScreen({ flag, index, total, onAnswer }: Props) {
+export function GameScreen({ flag, index, total, score, onAnswer }: Props) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [lastKnew, setLastKnew] = useState<boolean | null>(null);
 
@@ -31,40 +32,51 @@ export function GameScreen({ flag, index, total, onAnswer }: Props) {
     }, REVEAL_MS);
   };
 
+  if (isRevealed) {
+    return (
+      <div
+        className={`h-dvh flex items-center justify-center p-6 ${
+          lastKnew ? 'bg-green-500' : 'bg-red-500'
+        }`}
+      >
+        <div className="text-5xl font-bold text-white text-center">{flag.answer}</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4 flex flex-col gap-4">
-      <div className="text-lg">
-        {index + 1}/{total}
+    <div className="h-dvh flex flex-col">
+      <div className="flex justify-between p-4 text-lg font-medium">
+        <span>
+          {index + 1}/{total}
+        </span>
+        <span>✓ {score}</span>
       </div>
 
-      <img src={flag.img} alt="flaga" className="w-full max-h-[50vh] object-contain" />
+      <div className="flex-1 flex items-center justify-center px-4 min-h-0">
+        <img
+          src={flag.img}
+          alt="flaga"
+          className="object-contain max-h-[50vh] w-full"
+        />
+      </div>
 
-      {isRevealed ? (
-        <div
-          className={`text-3xl font-bold text-center p-4 rounded text-white ${
-            lastKnew ? 'bg-green-500' : 'bg-red-500'
-          }`}
+      <div className="flex gap-2 p-2">
+        <button
+          type="button"
+          onClick={() => answer(false)}
+          className="flex-1 h-24 bg-red-500 text-white text-2xl font-bold rounded-2xl active:bg-red-600"
         >
-          {flag.answer}
-        </div>
-      ) : (
-        <div className="flex gap-4">
-          <button
-            type="button"
-            onClick={() => answer(false)}
-            className="flex-1 py-4 bg-red-500 text-white text-xl rounded"
-          >
-            ❌
-          </button>
-          <button
-            type="button"
-            onClick={() => answer(true)}
-            className="flex-1 py-4 bg-green-500 text-white text-xl rounded"
-          >
-            ✅
-          </button>
-        </div>
-      )}
+          ❌
+        </button>
+        <button
+          type="button"
+          onClick={() => answer(true)}
+          className="flex-1 h-24 bg-green-500 text-white text-2xl font-bold rounded-2xl active:bg-green-600"
+        >
+          ✅
+        </button>
+      </div>
     </div>
   );
 }

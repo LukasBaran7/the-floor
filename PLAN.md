@@ -225,22 +225,27 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 5 — UI mobile + feedback wizualny (~45 min)
+## Etap 5 — UI mobile + feedback wizualny (~45 min) ✅ DONE
 
 **Cel**: apka wygląda i działa dobrze na telefonie.
 
 **Todosy**:
-- [ ] W `index.html`: `<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">`
-- [ ] W `index.html` zmień `<title>` na "The Floor Trener"
-- [ ] `body` lub root div: `h-dvh overflow-hidden` (dvh = dynamic viewport height, ważne na mobile)
-- [ ] **StartScreen**: centered flex column, tytuł `text-4xl font-bold`, przycisk `h-16 text-2xl px-8 rounded-2xl bg-blue-600 text-white`
-- [ ] **GameScreen** layout:
+- [x] W `index.html`: `<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">`
+- [x] W `index.html` zmień `<title>` na "The Floor Trener" (też `lang="pl"`)
+- [x] Każdy ekran sam ustawia `h-dvh` na rooście — nie diraliśmy w `body`/`#root` (dvh = dynamic viewport height, ważne na mobile)
+- [x] **StartScreen**: centered flex column, tytuł `text-4xl font-bold`, przycisk `h-16 text-2xl px-8 rounded-2xl bg-blue-600 text-white`
+- [x] **GameScreen** layout:
   - Górny pasek: counter `3/20` (po lewej), score `✓ 2` (po prawej), `p-4 text-lg`
   - Środek: flaga `object-contain max-h-[50vh] w-full px-4`
   - Dół: dwa przyciski full-width, `h-24 text-2xl`, ✅ `bg-green-500` / ❌ `bg-red-500`
-- [ ] **Stan reveal**: gdy `isRevealed`, całe tło `bg-green-500` (jeśli `lastKnew`) lub `bg-red-500`; na środku odpowiedź `text-5xl text-white font-bold`; przyciski schowane (`hidden`) lub `pointer-events-none opacity-50`
-- [ ] **ResultScreen**: duża liczba `X/20` w `text-6xl`, pod tym przycisk "Zagraj jeszcze raz"
-- [ ] Test w DevTools w trybie mobile (iPhone 14 Pro)
+- [x] **Stan reveal**: pełny ekran `bg-green-500` / `bg-red-500`, na środku odpowiedź `text-5xl text-white font-bold`; layout z przyciskami w ogóle nie jest renderowany (return wcześnie)
+- [x] **ResultScreen**: duża liczba `X/20` w `text-6xl`, pod tym przycisk "Zagraj jeszcze raz"
+- [ ] Test w DevTools w trybie mobile (iPhone 14 Pro) — *do potwierdzenia przez Ciebie*
+
+**Uwagi z implementacji:**
+- Score jest teraz prop GameScreen (`✓ X` w prawym górnym rogu).
+- `active:bg-*-600/700` dodane do przycisków dla tap feedback.
+- `flex-1` + `min-h-0` na środkowej sekcji GameScreen — flaga skaluje się do dostępnej wysokości i nie wypycha przycisków.
 
 **Definicja zrobione**: apka wygląda dobrze na telefonie, tap targety duże, kolory dają feedback.
 

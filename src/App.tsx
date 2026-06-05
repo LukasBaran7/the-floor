@@ -40,6 +40,7 @@ function App() {
         flag={shuffled[currentIndex]}
         index={currentIndex}
         total={shuffled.length}
+        score={score}
         onAnswer={handleAnswer}
       />
     );

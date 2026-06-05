@@ -6,15 +6,15 @@ type Props = {
 
 export function ResultScreen({ score, total, onReplay }: Props) {
   return (
-    <div className="p-4 flex flex-col gap-4 items-center">
-      <h1 className="text-2xl font-bold">Wynik</h1>
-      <p className="text-3xl">
-        Wiedziałeś {score}/{total}
+    <div className="h-dvh flex flex-col items-center justify-center gap-8 p-6">
+      <p className="text-xl text-gray-500">Wiedziałeś</p>
+      <p className="text-6xl font-bold">
+        {score}/{total}
       </p>
       <button
         type="button"
         onClick={onReplay}
-        className="px-4 py-2 bg-blue-600 text-white rounded"
+        className="h-16 px-8 text-2xl rounded-2xl bg-blue-600 text-white font-semibold active:bg-blue-700"
       >
         Zagraj jeszcze raz
       </button>
