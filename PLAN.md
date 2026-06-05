@@ -188,31 +188,36 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 4 — Logika gry + dźwięki (~45 min)
+## Etap 4 — Logika gry + dźwięki (~45 min) ✅ DONE
 
 **Cel**: pełna pętla — tap wiem/nie wiem, dźwięk, reveal, auto-advance, ekran wyniku.
 
 **Todosy**:
-- [ ] W `App.tsx` trzymaj stan: `screen`, `currentIndex`, `score`, `shuffled` (przemieszane flagi na początku gry)
-- [ ] Funkcja `startGame()`:
+- [x] W `App.tsx` trzymaj stan: `screen`, `currentIndex`, `score`, `shuffled` (przemieszane flagi na początku gry)
+- [x] Funkcja `startGame()`:
   ```ts
   setShuffled([...flagi].sort(() => Math.random() - 0.5));
   setCurrentIndex(0);
   setScore(0);
   setScreen('game');
   ```
-- [ ] Przekaż do `GameScreen` propsy: `flag` (current), `index`, `total`, `onAnswer: (knew: boolean) => void`
-- [ ] Na górze `GameScreen.tsx` (poza komponentem):
+- [x] Przekaż do `GameScreen` propsy: `flag` (current), `index`, `total`, `onAnswer: (knew: boolean) => void`
+- [x] Na górze `GameScreen.tsx` (poza komponentem):
   ```tsx
   const correctSound = new Audio('/sounds/correct.m4a');
   const incorrectSound = new Audio('/sounds/incorrect.m4a');
   ```
-- [ ] W `GameScreen`: stan lokalny `isRevealed: boolean`, `lastKnew: boolean | null`
-- [ ] Klik ✅: `correctSound.currentTime = 0; correctSound.play();` → `setIsRevealed(true)` → `setLastKnew(true)` → po 1500ms `onAnswer(true)` + reset
-- [ ] Klik ❌: to samo z `incorrectSound` i `false`
-- [ ] W `App.tsx` w `handleAnswer`: jeśli `knew` to `score++`. Jeśli `currentIndex + 1 >= shuffled.length` → `setScreen('result')`, inaczej `currentIndex++`
-- [ ] `ResultScreen` dostaje `score: number, total: number`, pokazuje "Wiedziałeś X/Y"
-- [ ] Klik "Zagraj jeszcze raz" → `startGame()`
+- [x] W `GameScreen`: stan lokalny `isRevealed: boolean`, `lastKnew: boolean | null`
+- [x] Klik ✅: `correctSound.currentTime = 0; correctSound.play();` → `setIsRevealed(true)` → `setLastKnew(true)` → po 1500ms `onAnswer(true)` + reset
+- [x] Klik ❌: to samo z `incorrectSound` i `false`
+- [x] W `App.tsx` w `handleAnswer`: jeśli `knew` to `score++`. Jeśli `currentIndex + 1 >= shuffled.length` → `setScreen('result')`, inaczej `currentIndex++`
+- [x] `ResultScreen` dostaje `score: number, total: number`, pokazuje "Wiedziałeś X/Y"
+- [x] Klik "Zagraj jeszcze raz" → `startGame()`
+
+**Uwagi z implementacji:**
+- Score w trakcie gry NIE jest jeszcze widoczny w UI — pasek z `✓ X` dorzucamy w Etapie 5 (polish/layout).
+- StartScreen prop został przemianowany `onNext` → `onStart`, ResultScreen ma teraz `score`, `total`, `onReplay`.
+- W `answer()` w GameScreen guard `if (isRevealed) return;` zapobiega podwójnemu klikowi w trakcie reveal.
 
 **Definicja zrobione**: przechodzisz pełną grę 20 pytań, dźwięki grają, score liczy się poprawnie, wracasz do startu.
 
