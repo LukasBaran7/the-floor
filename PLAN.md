@@ -165,12 +165,12 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 3 — Audio assets (~10 min)
+## Etap 3 — Audio assets (~10 min) ✅ DONE
 
 **Cel**: pobrać 2 pliki dźwiękowe lokalnie do `public/sounds/`.
 
 **Todosy**:
-- [ ] Pobierz oba pliki:
+- [x] Pobierz oba pliki:
   ```bash
   mkdir -p public/sounds
   curl -L -o public/sounds/correct.m4a \
@@ -178,9 +178,9 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
   curl -L -o public/sounds/incorrect.m4a \
     "https://raw.githubusercontent.com/campavao/the-floor/main/public/sounds/incorrect-buzz.m4a"
   ```
-- [ ] Z `npm run dev` aktywnym, otwórz w przeglądarce:
-  - `http://localhost:5173/sounds/correct.m4a` — powinien odtworzyć ding
-  - `http://localhost:5173/sounds/incorrect.m4a` — powinien odtworzyć buzz
+- [x] Z `npm run dev` aktywnym, otwórz w przeglądarce:
+  - `http://localhost:5173/sounds/correct.m4a` — powinien odtworzyć ding *(HTTP 200, 80KB — serwer OK; odsłuch potwierdzisz po Etapie 4)*
+  - `http://localhost:5173/sounds/incorrect.m4a` — powinien odtworzyć buzz *(HTTP 200, 87KB — serwer OK)*
 
 **Definicja zrobione**: oba pliki w repo, dostępne pod `/sounds/`.
 
