@@ -141,7 +141,7 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 - [x] Utwórz `src/screens/ResultScreen.tsx`: napis "Wynik" + przycisk "Restart"
 - [x] W `App.tsx`: `useState<Screen>('start')` + render warunkowy
 - [x] Każdy ekran dostaje prop `onNext: () => void`
-- [ ] Sprawdź ręcznie: Start → Gra → Wynik → Start działa — *do potwierdzenia przez Ciebie w przeglądarce*
+- [x] Sprawdź ręcznie: Start → Gra → Wynik → Start działa
 
 **Definicja zrobione**: klikasz przyciski, ekrany się zmieniają w pętli.
 
@@ -149,14 +149,14 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 2 — Dane flag (~5 min)
+## Etap 2 — Dane flag (~5 min) ✅ DONE
 
 **Cel**: 20 flag europejskich w `src/data/flagi.ts`.
 
 **Todosy**:
-- [ ] `mkdir -p src/data`
-- [ ] Utwórz `src/data/flagi.ts` z zawartością z sekcji "Dane flag" wyżej (gotowe do skopiowania)
-- [ ] Sprawdź że `import { flagi } from './data/flagi'` w App.tsx nie wywala TS
+- [x] `mkdir -p src/data`
+- [x] Utwórz `src/data/flagi.ts` z zawartością z sekcji "Dane flag" wyżej (gotowe do skopiowania)
+- [x] Sprawdź że `import { flagi } from './data/flagi'` w App.tsx nie wywala TS (`tsc --noEmit -p tsconfig.app.json` clean)
 - [ ] (Opcjonalnie) sprawdź losowe 2-3 URL-e w przeglądarce — czy ładują się obrazki
 
 **Definicja zrobione**: `flagi` ma 20 elementów, TypeScript jest happy.
