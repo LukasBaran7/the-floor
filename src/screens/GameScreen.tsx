@@ -41,35 +41,37 @@ export function GameScreen({ flag, index, total, score, onAnswer, onExit }: Prop
   };
 
   return (
-    <div className="h-dvh flex flex-col">
-      <div className="flex items-center justify-between p-4 text-lg font-medium">
+    <div className="h-dvh flex flex-col bg-floor-bg">
+      <div className="flex items-center justify-between p-4 text-lg font-bold uppercase tracking-wider">
         <button
           type="button"
           onClick={tryExit}
-          className="text-blue-600 active:opacity-60"
+          className="text-floor-blue active:opacity-60"
           aria-label="Wyjdź"
         >
           ← Wyjdź
         </button>
-        <span>
+        <span className="text-white/80">
           {index + 1}/{total}
         </span>
-        <span>✓ {score}</span>
+        <span className="text-floor-orange">✓ {score}</span>
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 min-h-0">
-        <img
-          src={flag.img}
-          alt="flaga"
-          className="object-contain max-h-full w-full"
-        />
+        <div className="bg-white p-3 border-2 border-white max-h-full">
+          <img
+            src={flag.img}
+            alt="flaga"
+            className="object-contain max-h-[55vh] w-full"
+          />
+        </div>
       </div>
 
       <div className="p-2">
         {isRevealed ? (
           <div
-            className={`h-24 flex items-center justify-center rounded-2xl text-white text-3xl font-bold ${
-              lastKnew ? 'bg-green-500' : 'bg-red-500'
+            className={`h-24 flex items-center justify-center border-2 border-white text-white text-3xl font-bold uppercase tracking-wider ${
+              lastKnew ? 'bg-green-600' : 'bg-red-600'
             }`}
           >
             {flag.answer}
@@ -79,14 +81,14 @@ export function GameScreen({ flag, index, total, score, onAnswer, onExit }: Prop
             <button
               type="button"
               onClick={() => answer(false)}
-              className="flex-1 h-24 bg-red-500 text-white text-2xl font-bold rounded-2xl active:bg-red-600"
+              className="flex-1 h-24 bg-red-600 border-2 border-white text-white text-3xl font-bold active:bg-red-700"
             >
               ❌
             </button>
             <button
               type="button"
               onClick={() => answer(true)}
-              className="flex-1 h-24 bg-green-500 text-white text-2xl font-bold rounded-2xl active:bg-green-600"
+              className="flex-1 h-24 bg-green-600 border-2 border-white text-white text-3xl font-bold active:bg-green-700"
             >
               ✅
             </button>

@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+@theme {
+  --color-floor-bg: #000428;
+  --color-floor-tile: #00004b;
+  --color-floor-tile-light: #00005a;
+  --color-floor-blue: #00a8ff;
+  --color-floor-blue-dark: #0078d4;
+  --color-floor-orange: #ff6b35;
+  --color-floor-gold: #ffd700;
+}
+
+html,
+body,
+#root {
+  background: var(--color-floor-bg);
+  color: white;
+}
+
+/* Metallic gold for hero title — adapted from campavao/the-floor */
+.metallic-gold {
+  background: linear-gradient(
+    180deg,
+    #ffd700 0%,
+    #ffed4e 20%,
+    #ffd700 40%,
+    #d4af37 60%,
+    #b8860b 80%,
+    #8b6914 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow:
+    0 -1px 2px rgba(255, 255, 255, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    0 0 8px rgba(255, 215, 0, 0.2);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}

@@ -7,23 +7,23 @@ type Props = {
 
 export function ResultScreen({ score, total, onReplay, onBackToCategories }: Props) {
   return (
-    <div className="h-dvh flex flex-col items-center justify-center gap-6 p-6">
-      <p className="text-xl text-gray-500">Wiedziałeś</p>
-      <p className="text-6xl font-bold">
+    <div className="h-dvh flex flex-col items-center justify-center gap-8 p-6 bg-floor-bg">
+      <p className="text-floor-blue text-sm uppercase tracking-widest">Wiedziałeś</p>
+      <p className="metallic-gold text-7xl">
         {score}/{total}
       </p>
-      <div className="flex flex-col gap-3 w-full max-w-xs">
+      <div className="flex flex-col gap-4 w-full max-w-xs">
         <button
           type="button"
           onClick={onReplay}
-          className="h-16 px-8 text-xl rounded-2xl bg-blue-600 text-white font-semibold active:bg-blue-700"
+          className="h-16 px-8 text-lg bg-floor-tile border-2 border-white text-white font-bold uppercase tracking-wider active:bg-floor-tile-light"
         >
           Zagraj jeszcze raz
         </button>
         <button
           type="button"
           onClick={onBackToCategories}
-          className="h-16 px-8 text-xl rounded-2xl bg-gray-200 text-gray-800 font-semibold active:bg-gray-300"
+          className="h-16 px-8 text-lg bg-transparent border-2 border-white/40 text-white/80 font-bold uppercase tracking-wider active:bg-white/10"
         >
           Inne kategorie
         </button>
