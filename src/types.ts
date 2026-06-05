@@ -3,4 +3,10 @@ export type Flag = {
   answer: string;
 };
 
-export type Screen = 'start' | 'game' | 'result';
+export type Category = {
+  id: string;
+  name: string;
+  items: Flag[];
+};
+
+export type Screen = 'start' | 'categories' | 'game' | 'result';

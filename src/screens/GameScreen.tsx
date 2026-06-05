@@ -32,18 +32,6 @@ export function GameScreen({ flag, index, total, score, onAnswer }: Props) {
     }, REVEAL_MS);
   };
 
-  if (isRevealed) {
-    return (
-      <div
-        className={`h-dvh flex items-center justify-center p-6 ${
-          lastKnew ? 'bg-green-500' : 'bg-red-500'
-        }`}
-      >
-        <div className="text-5xl font-bold text-white text-center">{flag.answer}</div>
-      </div>
-    );
-  }
-
   return (
     <div className="h-dvh flex flex-col">
       <div className="flex justify-between p-4 text-lg font-medium">
@@ -57,25 +45,37 @@ export function GameScreen({ flag, index, total, score, onAnswer }: Props) {
         <img
           src={flag.img}
           alt="flaga"
-          className="object-contain max-h-[50vh] w-full"
+          className="object-contain max-h-full w-full"
         />
       </div>
 
-      <div className="flex gap-2 p-2">
-        <button
-          type="button"
-          onClick={() => answer(false)}
-          className="flex-1 h-24 bg-red-500 text-white text-2xl font-bold rounded-2xl active:bg-red-600"
-        >
-          ❌
-        </button>
-        <button
-          type="button"
-          onClick={() => answer(true)}
-          className="flex-1 h-24 bg-green-500 text-white text-2xl font-bold rounded-2xl active:bg-green-600"
-        >
-          ✅
-        </button>
+      <div className="p-2">
+        {isRevealed ? (
+          <div
+            className={`h-24 flex items-center justify-center rounded-2xl text-white text-3xl font-bold ${
+              lastKnew ? 'bg-green-500' : 'bg-red-500'
+            }`}
+          >
+            {flag.answer}
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => answer(false)}
+              className="flex-1 h-24 bg-red-500 text-white text-2xl font-bold rounded-2xl active:bg-red-600"
+            >
+              ❌
+            </button>
+            <button
+              type="button"
+              onClick={() => answer(true)}
+              className="flex-1 h-24 bg-green-500 text-white text-2xl font-bold rounded-2xl active:bg-green-600"
+            >
+              ✅
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

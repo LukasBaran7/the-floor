@@ -247,6 +247,10 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 - `active:bg-*-600/700` dodane do przycisków dla tap feedback.
 - `flex-1` + `min-h-0` na środkowej sekcji GameScreen — flaga skaluje się do dostępnej wysokości i nie wypycha przycisków.
 
+**Doszło po feedbacku usera (poza pierwotnym planem Etapu 5):**
+- **Reveal inline pod flagą** (nie fullscreen) — flaga zostaje widoczna w trakcie reveala, na dole pojawia się kolorowy panel `bg-green-500`/`bg-red-500` w miejscu przycisków, `text-3xl` z odpowiedzią. Layout shell się nie rusza.
+- **Wciągnięty pre-MVP feature `#8` z roadmapy: wybór kategorii** — flow teraz: Start → Categories → Game → Result. Nowe pliki: `src/types.ts` (`Category`), `src/data/categories.ts` (rejestr), `src/screens/CategoriesScreen.tsx`. ResultScreen ma dodatkowo przycisk "Inne kategorie" (powrót do listy). Na razie 1 kategoria, struktura przygotowana pod dokładanie kolejnych jednym wpisem do `categories.ts`.
+
 **Definicja zrobione**: apka wygląda dobrze na telefonie, tap targety duże, kolory dają feedback.
 
 **Commit**: `feat: mobile-first layout with color feedback`
