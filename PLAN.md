@@ -17,9 +17,11 @@ Webowa apka do treningu rozpoznawania kategorii przed udziałem w teleturnieju "
 ## Zakres MVP
 
 - **1 tryb**: trening kategorii
-- **Kategorie**: rejestr w `src/data/categories.ts` — start MVP z 1 kategorią (flagi Europy, 20 sztuk), UI wyboru gotowe pod dokładanie kolejnych
-- **4 ekrany**: Start → Categories → Gra → Wynik *(Categories wciągnięty z roadmapy #8 do MVP — patrz Etap 5)*
+- **Kategorie**: rejestr w `src/data/categories.ts` — start MVP z 1 kategorią (flagi Europy, docelowo ~70 po Etapie 5b), UI wyboru gotowe pod dokładanie kolejnych
+- **4 (lub 5) ekranów**: Start → Categories → *(opcjonalnie SessionSetup)* → Gra → Wynik *(Categories wciągnięty z roadmapy #8 do MVP — patrz Etap 5)*
 - **Mechanika**: pokaż flagę → tap ✅/❌ → reveal odpowiedzi inline pod flagą (1.5s, kolorowy panel zamiast przycisków) + dźwięk → następna → po wszystkich: wynik
+- **Wybór długości sesji** (Etap 5b): 10 / 20 / 50 / wszystkie przed startem gry
+- **Wyjście z treningu** (Etap 5b): przycisk w GameScreen, wraca do listy kategorii
 - **Dźwięki**: correct ding przy ✅, incorrect buzz przy ❌
 - **Brak**: timera, statystyk, pojedynku, voice, localStorage
 
@@ -265,6 +267,25 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
+## Etap 5b — Exit z treningu + długość sesji + większy dataset (~45 min)
+
+**Cel**: UX szlif przed deployem — gracz może przerwać sesję, wybrać ile pytań chce i ma większą pulę flag do wyboru.
+
+**Todosy**:
+- [ ] **Przycisk "Wyjdź" w `GameScreen`** — np. w lewym górnym rogu obok counter'a (`←` lub "Wyjdź"). Klik → wraca do `CategoriesScreen` (porzuca obecny postęp, NIE zapisuje wyniku). Otwarte: czy dawać confirm dialog `if (confirm("Przerwać sesję?"))` — zdecydować przy implementacji, raczej tak żeby przypadkowy tap nie zabijał gry.
+- [ ] **Wybór długości sesji** — na ekranie kategorii / po wybraniu kategorii pokazać do wyboru: **10 / 20 / 50 / wszystkie**. Opcje > `category.items.length` ukryte (gdy kategoria ma 20 flag, nie pokazujemy "50"). Możliwe podejścia:
+  - (A) na karcie kategorii w `CategoriesScreen` pokazać 4 mini-przyciski (kompaktowe, mobilnie OK?)
+  - (B) **rekomendowane**: nowy lekki ekran `SessionSetupScreen` (lub modal) między Categories a Game — wybierasz kategorię, potem długość, potem leci gra. Czyściej skaluje się gdy dojdą opcje (timer, tryb itp.).
+  - `App.startGame(category, length)` bierze tylko pierwsze `length` elementów po shuffle.
+- [ ] **Powiększyć dataset flag** — dodać +50 flag tak żeby pula `Flagi Europy` urosła do ~70 (cała Europa łącznie z mikropaństwami i częściowo uznawanymi). Format ten sam: `flagcdn.com/w640/{iso}.png`. Lista do uzgodnienia przy implementacji — startowy zestaw kandydatów: AL, AD, AM, AZ, BY, BA, BG, HR, CY, EE, FI, GE, IS, XK, LV, LI, LT, LU, MT, MD, MC, ME, MK, RU, SM, RS, SI, TR, UA, VA + reszta do 50.
+- [ ] (Opcjonalnie) zmienić `name` kategorii na "Flagi Europy (70)" albo pokazywać count obok nazwy — już mamy `cat.items.length` po prawej stronie karty, więc to się samo zaktualizuje.
+
+**Definicja zrobione**: w GameScreen jest przycisk wyjścia (działa, opcjonalnie z confirm); przed startem wybierasz 10/20/50/wszystkie i gra trwa dokładnie tyle pytań; lista flag Europy ma ~70 pozycji.
+
+**Commit**: `feat: exit button, session length picker, expanded flag set`
+
+---
+
 ## Etap 6 — Deploy na Vercel (~15 min)
 
 **Cel**: publiczny URL, działa na telefonie.
@@ -302,6 +323,7 @@ Każdy = jeden wieczór, w kolejności priorytetu:
 |------|--------------------------------|
 | 5 | **Ekran wyboru kategorii** (`CategoriesScreen.tsx` + `data/categories.ts` + typ `Category`) — wciągnięte z roadmapy #8 do MVP. Flow zmienił się z 3 ekranów (Start → Game → Result) na 4 (Start → Categories → Game → Result). ResultScreen dostał drugi przycisk "Inne kategorie" (powrót do listy). |
 | 5 | **Reveal odpowiedzi inline pod flagą** zamiast fullscreen — user explicitly chciał widzieć flagę razem z odpowiedzią. Kolorowy panel `bg-green-500`/`bg-red-500` (`h-24 rounded-2xl`) pojawia się w miejscu przycisków ✅/❌; reszta layoutu się nie rusza. |
+| 5b | **Przycisk wyjścia z treningu, wybór długości sesji (10/20/50/all), powiększenie datasetu flag do ~70** — dodane na prośbę usera przed deployem. Szczegóły: patrz Etap 5b. |
 
 ---
 
