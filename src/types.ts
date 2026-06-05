@@ -1,12 +1,12 @@
-export type Flag = {
-  img: string;
+export type Item = {
+  img?: string;
   answer: string;
 };
 
 export type Category = {
   id: string;
   name: string;
-  items: Flag[];
+  items: Item[];
 };
 
 export type Screen = 'start' | 'categories' | 'session-setup' | 'game' | 'result';

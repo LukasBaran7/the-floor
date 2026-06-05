@@ -7,11 +7,11 @@ type Props = {
 
 export function CategoriesScreen({ onSelect }: Props) {
   return (
-    <div className="h-dvh flex flex-col p-6 gap-6 bg-floor-bg">
-      <h1 className="text-2xl font-bold uppercase tracking-wider text-floor-blue">
+    <div className="h-dvh flex flex-col bg-floor-bg">
+      <h1 className="text-2xl font-bold uppercase tracking-wider text-floor-blue p-6 pb-2">
         Wybierz kategorię
       </h1>
-      <div className="flex flex-col gap-4">
+      <div className="flex-1 overflow-y-auto px-6 pb-6 flex flex-col gap-3">
         {categories.map((cat) => (
           <button
             key={cat.id}

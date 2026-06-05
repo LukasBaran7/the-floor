@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Category, Flag, Screen } from './types';
+import type { Category, Item, Screen } from './types';
 import { StartScreen } from './screens/StartScreen';
 import { CategoriesScreen } from './screens/CategoriesScreen';
 import { SessionSetupScreen } from './screens/SessionSetupScreen';
@@ -13,7 +13,7 @@ function shuffle<T>(arr: T[]): T[] {
 function App() {
   const [screen, setScreen] = useState<Screen>('start');
   const [category, setCategory] = useState<Category | null>(null);
-  const [shuffled, setShuffled] = useState<Flag[]>([]);
+  const [shuffled, setShuffled] = useState<Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
 
@@ -53,7 +53,7 @@ function App() {
   if (screen === 'game')
     return (
       <GameScreen
-        flag={shuffled[currentIndex]}
+        item={shuffled[currentIndex]}
         index={currentIndex}
         total={shuffled.length}
         score={score}

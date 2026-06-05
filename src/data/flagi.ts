@@ -1,6 +1,6 @@
-import type { Flag } from '../types';
+import type { Item } from '../types';
 
-export const flagi: Flag[] = [
+export const flagi: Item[] = [
   { img: 'https://flagcdn.com/w640/pl.png', answer: 'Polska' },
   { img: 'https://flagcdn.com/w640/de.png', answer: 'Niemcy' },
   { img: 'https://flagcdn.com/w640/fr.png', answer: 'Francja' },

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Flag } from '../types';
+import type { Item } from '../types';
 
 const correctSound = new Audio('/sounds/correct.m4a');
 const incorrectSound = new Audio('/sounds/incorrect.m4a');
@@ -7,7 +7,7 @@ const incorrectSound = new Audio('/sounds/incorrect.m4a');
 const REVEAL_MS = 1500;
 
 type Props = {
-  flag: Flag;
+  item: Item;
   index: number;
   total: number;
   score: number;
@@ -15,7 +15,7 @@ type Props = {
   onExit: () => void;
 };
 
-export function GameScreen({ flag, index, total, score, onAnswer, onExit }: Props) {
+export function GameScreen({ item, index, total, score, onAnswer, onExit }: Props) {
   const [isRevealed, setIsRevealed] = useState(false);
   const [lastKnew, setLastKnew] = useState<boolean | null>(null);
 
@@ -58,13 +58,21 @@ export function GameScreen({ flag, index, total, score, onAnswer, onExit }: Prop
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 min-h-0">
-        <div className="bg-white p-3 border-2 border-white max-h-full">
-          <img
-            src={flag.img}
-            alt="flaga"
-            className="object-contain max-h-[55vh] w-full"
-          />
-        </div>
+        {item.img ? (
+          <div className="bg-white p-3 border-2 border-white max-h-full">
+            <img
+              src={item.img}
+              alt=""
+              className="object-contain max-h-[55vh] w-full"
+            />
+          </div>
+        ) : (
+          <div className="bg-floor-tile border-2 border-white px-8 py-12 max-w-full">
+            <p className="text-white text-4xl font-bold uppercase tracking-wide text-center break-words">
+              {item.answer}
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="p-2">
@@ -74,7 +82,7 @@ export function GameScreen({ flag, index, total, score, onAnswer, onExit }: Prop
               lastKnew ? 'bg-green-600' : 'bg-red-600'
             }`}
           >
-            {flag.answer}
+            {item.answer}
           </div>
         ) : (
           <div className="flex gap-2">
