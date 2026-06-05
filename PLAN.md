@@ -130,18 +130,18 @@ Każdy etap = jeden commit. Po każdym apka działa end-to-end (z mniejszą funk
 
 ---
 
-## Etap 1 — Statyczne ekrany + nawigacja (~30 min)
+## Etap 1 — Statyczne ekrany + nawigacja (~30 min) ✅ DONE
 
 **Cel**: trzy ekrany jako komponenty, przełączanie między nimi przyciskami. Bez logiki gry.
 
 **Todosy**:
-- [ ] Utwórz `src/types.ts` z `Screen` i `Flag` (jak wyżej)
-- [ ] Utwórz `src/screens/StartScreen.tsx`: tytuł "The Floor Trener" + przycisk "Start"
-- [ ] Utwórz `src/screens/GameScreen.tsx`: napis "Gra" + placeholder + przycisk "Zakończ"
-- [ ] Utwórz `src/screens/ResultScreen.tsx`: napis "Wynik" + przycisk "Restart"
-- [ ] W `App.tsx`: `useState<Screen>('start')` + render warunkowy
-- [ ] Każdy ekran dostaje prop `onNext: () => void`
-- [ ] Sprawdź ręcznie: Start → Gra → Wynik → Start działa
+- [x] Utwórz `src/types.ts` z `Screen` i `Flag` (jak wyżej)
+- [x] Utwórz `src/screens/StartScreen.tsx`: tytuł "The Floor Trener" + przycisk "Start"
+- [x] Utwórz `src/screens/GameScreen.tsx`: napis "Gra" + placeholder + przycisk "Zakończ"
+- [x] Utwórz `src/screens/ResultScreen.tsx`: napis "Wynik" + przycisk "Restart"
+- [x] W `App.tsx`: `useState<Screen>('start')` + render warunkowy
+- [x] Każdy ekran dostaje prop `onNext: () => void`
+- [ ] Sprawdź ręcznie: Start → Gra → Wynik → Start działa — *do potwierdzenia przez Ciebie w przeglądarce*
 
 **Definicja zrobione**: klikasz przyciski, ekrany się zmieniają w pętli.
 
